@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import cloudflarePagesLogo from "./assets/cloudflare-pages.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
+    const interval = setInterval(async () => {
+      const response = await fetch("/api/time");
+      const { time } = await response.json();
+      setTime(new Date(time));
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -15,22 +19,24 @@ function App() {
     <div className="App">
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
+          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+        <a href="https://pages.cloudflare.com" target="_blank">
+          <img
+            src={cloudflarePagesLogo}
+            className="logo cloudflare-pages"
+            alt="Cloudflare Pages logo"
+          />
+        </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + React + Cloudflare Pages</h1>
       <div className="card">
-        <p>Current time is {time.toLocaleString()}</p>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        {time ? <p>Current time is {time.toLocaleString()}</p> : null}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p className="read-the-docs">Click on the logos to learn more</p>
     </div>
   );
 }

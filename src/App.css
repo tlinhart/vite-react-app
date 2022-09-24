@@ -10,11 +10,14 @@
   padding: 1.5em;
   will-change: filter;
 }
-.logo:hover {
+.logo.vite:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.logo.cloudflare-pages:hover {
+  filter: drop-shadow(0 0 2em #ffb01de0);
 }
 
 @keyframes logo-spin {
